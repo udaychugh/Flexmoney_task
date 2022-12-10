@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Classes Booking</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Yoga Classes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">Pricing</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal2">Batches</a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+
+      <div class="headerClass">
+        <h3>Book your YOGA Classes</h3>
+            <form action="/register" method="POST" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" required autofocus>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>   
+                <div class="form-group">    
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" onchange="validateAge(this.value)" id="age" name="age" placeholder="Enter Your Age" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label for="doj">Date of Joining</label>
+                    <input type="date" class="form-control" id="doj" name="doj" placeholder="Enter Your Date of Joining" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label for="months">Number of Months</label>
+                    <input type="number" class="form-control" onchange="giveAmount(this.value)" id="months" name="months" placeholder="Enter Number Of Months" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label for="batch">Batch</label>
+                    <select name="batch" class="form-control" id="batch">
+                        <option value="default" selected disabled>Select Your Batch Timing</option>
+                        <option value="first">6-7 AM</option>
+                        <option value="second">7-8 AM</option>
+                        <option value="third">8-9 AM</option>
+                        <option value="fourth">5-6 PM</option>
+                    </select>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Pay ₹<span id="amount"></span></button>
+            </form>
+      </div>
+
+
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->   
+            <div class="modal-header">
+              <h4 class="modal-title">Yoga Classes Pricing</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                ₹ 500 per month <br>
+                (You can enroll any day but you have to pay for the entire month)
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="myModal2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->   
+            <div class="modal-header">
+              <h4 class="modal-title">Yoga Classes Batches</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                Monday to Sunday <br>
+                Batch 1 - 6-7 AM <br>
+                Batch 2 - 7-8 AM <br>
+                Batch 3 - 8-9 AM <br>
+                Batch 4 - 5-6 PM <br>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger alert-dismissible" id="setPosition">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong id="alertTitle"></strong> <span id="alertMsg"></span>
+      </div>
+
+      <script>
+        // Disable form submissions if there are invalid fields
+        (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+            });
+        }, false);
+        })();
+      </script>
+
+      <script>
+        function giveAmount(price)
+        {
+            if(price <= 0)
+            {
+                document.getElementById("setPosition").style.display = "block";
+                document.getElementById("alertTitle").innerHTML = "Inavlid Month!!";
+                document.getElementById("alertMsg").innerHTML = "Month cannot be less than or equal to zero";
+                document.getElementById("months").value = 1;
+                document.getElementById("amount").innerHTML = 500;
+            }
+            else
+            {
+                document.getElementById("amount").innerHTML = price * 500;
+            }
+            
+        }
+      </script>
+
+      <script>
+        function validateAge(uage)
+        {
+            if(uage <=18 || uage >=65)
+            {
+                document.getElementById("setPosition").style.display = "block";
+                document.getElementById("alertTitle").innerHTML = "Invalid Age!!";
+                document.getElementById("alertMsg").innerHTML = "Please Enter a Valid Age between 18-65";
+                document.getElementById("age").value = 18;
+            }
+        }
+      </script>
+</body>
+</html>

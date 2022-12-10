@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.headerClass{
+    margin-top: 60px;
+    padding: 20px;
+}
+
+#setPosition{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: none;
+}
